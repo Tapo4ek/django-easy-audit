@@ -1,0 +1,133 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-14 03:32+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: apps.py:10
+msgid "Easy Audit Application"
+msgstr "Логирование пользовательских действий"
+
+#: models.py:12
+msgid "User"
+msgstr "Пользователь"
+
+#: models.py:14
+msgid "Datetime"
+msgstr "Дата и время"
+
+#: models.py:25
+msgid "Create"
+msgstr "Создание"
+
+#: models.py:26
+msgid "Update"
+msgstr "Изменение"
+
+#: models.py:27
+msgid "Delete"
+msgstr "Удаление"
+
+#: models.py:30
+msgid "Event type"
+msgstr "Тип события"
+
+#: models.py:31
+msgid "Object id"
+msgstr "Идентификатор обьекта"
+
+#: models.py:32
+msgid "Model"
+msgstr "Таблица"
+
+#: models.py:33
+msgid "Object"
+msgstr "Объект"
+
+#: models.py:34
+msgid "Object json"
+msgstr "Данные объекта"
+
+#: models.py:35
+msgid "User identifier"
+msgstr "Идентификатор пользователя"
+
+#: models.py:36
+msgid "String version of the user pk"
+msgstr "Строковое представления id пользователя"
+
+#: models.py:37 models.py:65 models.py:77
+msgid "Remote IP"
+msgstr "IP пользователя"
+
+#: models.py:49
+msgid "CRUD event"
+msgstr "Событие (Создания/Редактирования/Удаления)"
+
+#: models.py:50
+msgid "CRUD events"
+msgstr "События (Создания/Редактирования/Удаления)"
+
+#: models.py:59
+msgid "Login"
+msgstr "Логин"
+
+#: models.py:60
+msgid "Logout"
+msgstr "Выход"
+
+#: models.py:61
+msgid "Failed login"
+msgstr "Ошибка логина"
+
+#: models.py:63
+msgid "Login type"
+msgstr "Тип логина"
+
+#: models.py:64
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: models.py:68
+msgid "Login event"
+msgstr "Событие логина"
+
+#: models.py:69
+msgid "Login events"
+msgstr "События логинов"
+
+#: models.py:74
+msgid "Uri"
+msgstr "Адрес"
+
+#: models.py:75
+msgid "Type"
+msgstr "Тип"
+
+#: models.py:76
+msgid "Query string"
+msgstr "Строка запроса"
+
+#: models.py:80
+msgid "Request event"
+msgstr "Событие запроса"
+
+#: models.py:81
+msgid "Request events"
+msgstr "События запросов"

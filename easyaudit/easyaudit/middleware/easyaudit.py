@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 try:
     from django.utils.deprecation import MiddlewareMixin
 except ImportError:
@@ -12,13 +15,16 @@ except ImportError:
 
 _thread_locals = local()
 
+
 def get_current_request():
     return getattr(_thread_locals, 'request', None)
+
 
 def get_current_user():
     request = get_current_request()
     if request:
         return getattr(request, 'user', None)
+
 
 class EasyAuditMiddleware(MiddlewareMixin):
     """Makes request available to this app signals."""
@@ -26,7 +32,5 @@ class EasyAuditMiddleware(MiddlewareMixin):
         self.get_response = get_response
 
     def __call__(self, request):
-        print('*' * 80)
-        print('setting request to thread_local storage')
         _thread_locals.request = request
         return self.get_response(request)
