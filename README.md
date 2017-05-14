@@ -55,7 +55,35 @@ you can define the following settings:
   A list of classes django-easy-audit will ignore. Use it to avoid logging some of your
   project's models if necessary. It can be a class or a string with `app_name.model_name`
   format. Defaults to `[]`.
+  
+* `DJANGO_EASY_AUDIT_UNREGISTERED_APPS`
 
+  The default list of apps django-easy-audit will ignore. Don't override this setting
+  unless you know what you are doing; it may create an infinite loop and break your project.
+  If you want django-easy-audit to stop logging one of your apps please use the following setting.
+
+* `DJANGO_EASY_AUDIT_UNREGISTERED_APPS_EXTRA`
+
+  A list of apps django-easy-audit will ignore. Use it to avoid logging some of your
+  project's apps if necessary. It can be string with `app_name` format. Defaults to `[]`.
+
+* `DJANGO_EASY_AUDIT_WRITE_EVENTS_ONLY_LOGGED_IN_USERS`
+
+  Set to `True` it won't log system events with no user instance (does not affect on log in, log out events). Defaults to `False`.
+
+* `DJANGO_EASY_AUDIT_ALLOW_DELETE_RECORDS`
+
+  Set to `False` it won't allow delete events also to superusers. Defaults to `True`.
+
+* `DJANGO_EASY_AUDIT_ALLOW_EDIT_RECORDS`
+
+  Set to `False` it won't allow edit events also to superusers. Defaults to `True`.
+  
+* `DJANGO_EASY_AUDIT_ALLOW_ADD_REDORDS`
+
+  Set to `False` it won't allow add events also to superusers. Defaults to `True`.
+  
+  
 ## What does it do
 
 django-easy-audit uses [Django signals](https://docs.djangoproject.com/en/dev/topics/signals/)
