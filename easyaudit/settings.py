@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 from importlib import import_module
 
 from django.apps.registry import apps
@@ -22,6 +25,8 @@ UNREGISTERED_CLASSES = getattr(settings, 'DJANGO_EASY_AUDIT_UNREGISTERED_CLASSES
 # extra unregistered classes
 UNREGISTERED_CLASSES.extend(getattr(settings, 'DJANGO_EASY_AUDIT_UNREGISTERED_CLASSES_EXTRA', []))
 
+UNREGISTERED_CLASSES.extend(getattr(settings, 'DJANGO_EASY_AUDIT_UNREGISTERED_CLASSES_EXTRA', []))
+
 for idx, item in enumerate(UNREGISTERED_CLASSES):
     if isinstance(item, six.string_types):
         model_class = apps.get_model(item)
@@ -35,6 +40,15 @@ WATCH_MODEL_EVENTS = getattr(settings, 'DJANGO_EASY_AUDIT_WATCH_MODEL_EVENTS', T
 
 # should request events be registered?
 WATCH_REQUEST_EVENTS = getattr(settings, 'DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS', True)
+
+# Make Models undeletable
+ALLOW_DELETE_RECORDS = getattr(settings, 'DJANGO_EASY_AUDIT_ALLOW_DELETE_RECORDS', True)
+
+# Make Models uneditable
+ALLOW_EDIT_RECORDS = getattr(settings, 'DJANGO_EASY_AUDIT_ALLOW_EDIT_RECORDS', True)
+
+# Disallow add records
+ALLOW_ADD_REDORDS = getattr(settings, 'DJANGO_EASY_AUDIT_ALLOW_ADD_REDORDS', True)
 
 # project defined callbacks
 CRUD_DIFFERENCE_CALLBACKS = []

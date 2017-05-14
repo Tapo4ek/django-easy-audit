@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 import logging
 from Cookie import SimpleCookie
 
@@ -12,8 +15,13 @@ from django.utils import timezone
 
 from .middleware.easyaudit import get_current_request, get_current_user
 from .models import CRUDEvent, LoginEvent, RequestEvent
-from .settings import UNREGISTERED_CLASSES, WATCH_LOGIN_EVENTS, \
-    CRUD_DIFFERENCE_CALLBACKS, WATCH_MODEL_EVENTS, WATCH_REQUEST_EVENTS
+from .settings import (
+    UNREGISTERED_CLASSES,
+    WATCH_LOGIN_EVENTS,
+    CRUD_DIFFERENCE_CALLBACKS,
+    WATCH_MODEL_EVENTS,
+    WATCH_REQUEST_EVENTS
+)
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +41,12 @@ def post_save(sender, instance, created, raw, using, update_fields, **kwargs):
             event_type = CRUDEvent.CREATE
         else:
             event_type = CRUDEvent.UPDATE
+
+        # request
+        try:
+            request = get_current_request()
+        except:
+            request = None
 
         # user
         try:
@@ -62,7 +76,8 @@ def post_save(sender, instance, created, raw, using, update_fields, **kwargs):
                 object_id=instance.id,
                 user=user,
                 datetime=timezone.now(),
-                user_pk_as_string=str(user.pk) if user else user
+                user_pk_as_string=str(user.pk) if user else user,
+                remote_ip=request and request.META.get('REMOTE_ADDR') or None
             )
 
             crud_event.save()
@@ -78,6 +93,12 @@ def post_delete(sender, instance, using, **kwargs):
                 return False
 
         object_json_repr = serializers.serialize("json", [instance])
+
+        # request
+        try:
+            request = get_current_request()
+        except:
+            request = None
 
         # user
         try:
@@ -97,7 +118,8 @@ def post_delete(sender, instance, using, **kwargs):
             object_id=instance.id,
             user=user,
             datetime=timezone.now(),
-            user_pk_as_string=str(user.pk) if user else user
+            user_pk_as_string=str(user.pk) if user else user,
+            remote_ip=request and request.META.get('REMOTE_ADDR') or None
         )
 
         crud_event.save()
