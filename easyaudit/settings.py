@@ -13,10 +13,8 @@ from django.db.migrations import Migration
 from django.db.migrations.recorder import MigrationRecorder
 from django.utils import six
 
-from easyaudit.models import CRUDEvent, LoginEvent
-
 # default unregistered classes
-UNREGISTERED_CLASSES = [CRUDEvent, LoginEvent, Migration, LogEntry, Session, Permission, ContentType,
+UNREGISTERED_CLASSES = [Migration, LogEntry, Session, Permission, ContentType,
                         MigrationRecorder.Migration]
 
 # override default unregistered classes if defined in project settings
@@ -25,7 +23,17 @@ UNREGISTERED_CLASSES = getattr(settings, 'DJANGO_EASY_AUDIT_UNREGISTERED_CLASSES
 # extra unregistered classes
 UNREGISTERED_CLASSES.extend(getattr(settings, 'DJANGO_EASY_AUDIT_UNREGISTERED_CLASSES_EXTRA', []))
 
-UNREGISTERED_CLASSES.extend(getattr(settings, 'DJANGO_EASY_AUDIT_UNREGISTERED_CLASSES_EXTRA', []))
+UNREGISTERED_APPS = ['easyaudit']
+
+# override default unregistered apps if defined in project settings
+UNREGISTERED_APPS = getattr(settings, 'DJANGO_EASY_AUDIT_UNREGISTERED_APPS', UNREGISTERED_APPS)
+
+# extra unregistered apps
+UNREGISTERED_APPS.extend(getattr(settings, 'DJANGO_EASY_AUDIT_UNREGISTERED_APPS_EXTRA', []))
+
+for app in UNREGISTERED_APPS:
+    if isinstance(app, six.string_types):
+        UNREGISTERED_CLASSES.extend(apps.get_app_config(app).get_models())
 
 for idx, item in enumerate(UNREGISTERED_CLASSES):
     if isinstance(item, six.string_types):
@@ -41,14 +49,16 @@ WATCH_MODEL_EVENTS = getattr(settings, 'DJANGO_EASY_AUDIT_WATCH_MODEL_EVENTS', T
 # should request events be registered?
 WATCH_REQUEST_EVENTS = getattr(settings, 'DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS', True)
 
-# Make Models undeletable
+# Make records undeletable for all users
 ALLOW_DELETE_RECORDS = getattr(settings, 'DJANGO_EASY_AUDIT_ALLOW_DELETE_RECORDS', True)
 
-# Make Models uneditable
+# Make records uneditable for all users
 ALLOW_EDIT_RECORDS = getattr(settings, 'DJANGO_EASY_AUDIT_ALLOW_EDIT_RECORDS', True)
 
-# Disallow add records
+# Disallow add records for all users
 ALLOW_ADD_REDORDS = getattr(settings, 'DJANGO_EASY_AUDIT_ALLOW_ADD_REDORDS', True)
+
+WRITE_EVENTS_ONLY_LOGGED_IN_USERS = getattr(settings, 'DJANGO_EASY_AUDIT_WRITE_EVENTS_ONLY_LOGGED_IN_USERS', True)
 
 # project defined callbacks
 CRUD_DIFFERENCE_CALLBACKS = []

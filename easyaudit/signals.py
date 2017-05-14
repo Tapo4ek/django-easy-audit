@@ -20,7 +20,8 @@ from .settings import (
     WATCH_LOGIN_EVENTS,
     CRUD_DIFFERENCE_CALLBACKS,
     WATCH_MODEL_EVENTS,
-    WATCH_REQUEST_EVENTS
+    WATCH_REQUEST_EVENTS,
+    WRITE_EVENTS_ONLY_LOGGED_IN_USERS
 )
 
 logger = logging.getLogger(__name__)
@@ -56,6 +57,9 @@ def post_save(sender, instance, created, raw, using, update_fields, **kwargs):
 
         if isinstance(user, AnonymousUser):
             user = None
+
+        if user is None and WRITE_EVENTS_ONLY_LOGGED_IN_USERS:
+            return
 
         # callbacks
 
@@ -108,6 +112,9 @@ def post_delete(sender, instance, using, **kwargs):
 
         if isinstance(user, AnonymousUser):
             user = None
+
+        if user is None and WRITE_EVENTS_ONLY_LOGGED_IN_USERS:
+            return
 
         # crud event
         crud_event = CRUDEvent.objects.create(
@@ -175,6 +182,9 @@ def request_started_handler(sender, environ, **kwargs):
                 user = get_user_model().objects.get(id=user_id)
             except:
                 user = None
+
+    if user is None and WRITE_EVENTS_ONLY_LOGGED_IN_USERS:
+        return
 
     request_event = RequestEvent.objects.create(
         uri=environ['PATH_INFO'],
