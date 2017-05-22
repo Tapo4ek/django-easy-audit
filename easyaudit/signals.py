@@ -72,6 +72,8 @@ def post_save(sender, instance, created, raw, using, update_fields, **kwargs):
 
         # create crud event only if all callbacks returned True
         if create_crud_event:
+            x_forwarded_for = request and request.META.get('HTTP_X_FORWARDED_FOR') or None
+            remote_addr = request and request.META.get('REMOTE_ADDR') or None
             crud_event = CRUDEvent.objects.create(
                 event_type=event_type,
                 object_repr=str(instance),
@@ -81,9 +83,8 @@ def post_save(sender, instance, created, raw, using, update_fields, **kwargs):
                 user=user,
                 datetime=timezone.now(),
                 user_pk_as_string=str(user.pk) if user else user,
-                remote_ip=request and request.META.get('REMOTE_ADDR') or None
+                remote_ip=x_forwarded_for or remote_addr
             )
-
             crud_event.save()
     except Exception:
         logger.exception('easy audit had a post-save exception.')
