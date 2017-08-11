@@ -35,6 +35,10 @@ def post_save(sender, instance, created, raw, using, update_fields, **kwargs):
             if isinstance(instance, unregistered_class):
                 return False
 
+        # If user just logged in, not writing event. We have another signal to control this.
+        if 'last_login' in update_fields and len(update_fields) == 1:
+            return
+
         object_json_repr = serializers.serialize("json", [instance])
 
         # created or updated?
