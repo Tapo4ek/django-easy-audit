@@ -87,7 +87,7 @@ def post_save(sender, instance, created, raw, using, update_fields, **kwargs):
                 user=user,
                 datetime=timezone.now(),
                 user_pk_as_string=str(user.pk) if user else user,
-                remote_ip=x_forwarded_for or remote_addr
+                remote_ip=(x_forwarded_for or remote_addr)[:20]
             )
             crud_event.save()
     except Exception:
