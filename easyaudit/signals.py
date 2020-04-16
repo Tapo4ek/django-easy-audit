@@ -2,7 +2,10 @@
 
 
 import logging
-from Cookie import SimpleCookie
+try:
+    from Cookie import SimpleCookie
+except ImportError:
+    from http.cookies import SimpleCookie
 
 from django.contrib.auth import signals as auth_signals, get_user_model
 from django.contrib.auth.models import AnonymousUser
